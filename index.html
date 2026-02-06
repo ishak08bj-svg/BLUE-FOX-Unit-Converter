@@ -1,81 +1,141 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BLUE FOX – Smart Converter</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
+/* عام */
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',sans-serif;}
 body{
-  background:#0f2027;
-  color:#fff;
+  min-height:100vh;
+  background:radial-gradient(circle at top,#0aa2ff,#001f3f);
+  color:white;
   display:flex;
   justify-content:center;
   align-items:flex-start;
-  min-height:100vh;
   padding:20px;
   transition:0.3s;
 }
-body.light{background:#f2f2f2;color:#111;}
-.container{width:100%;max-width:500px;}
+body.light{background:radial-gradient(circle at top,#f5f7fa,#c3cfe2);color:#111;}
+
+/* الحاوية */
+.container{
+  width:100%;
+  max-width:500px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  border-radius:30px;
+  background:linear-gradient(145deg,#1ec9ff,#005eff);
+  box-shadow:0 30px 60px rgba(0,0,0,.6),inset 0 2px 6px rgba(255,255,255,.4);
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+}
+.container::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:translateX(-100%);
+  transition:.7s;
+}
+.container:hover::before{transform:translateX(100%);}
+.container:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 40px 80px rgba(0,0,0,.9);}
+
+/* الرأس */
 .topBar{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  margin-bottom:15px;
   gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
 }
-.topBar button{
-  background:#0072ff;
-  border:none;
-  border-radius:12px;
-  padding:10px;
-  color:#fff;
-  cursor:pointer;
-  font-size:18px;
-}
-body.light .topBar button{background:#ff9800;color:#fff;}
-.topBar select{
-  border-radius:12px;
-  padding:10px;
-  font-size:16px;
-  border:none;
-  background:#0072ff;color:#fff;
-}
-body.light .topBar select{background:#ff9800;color:#fff;}
-.header{display:flex;flex-direction:column;align-items:center;gap:10px;}
-.header h1{text-align:center;font-size:1.6rem;font-weight:bold;margin-bottom:10px;}
-.typeIndex{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:10px;transition:0.3s;}
-.typeIndex button{
+.topBar button, .topBar select{
   flex:1;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  font-size:1rem;
+  cursor:pointer;
+  transition:0.3s;
+}
+.topBar button{background:linear-gradient(145deg,#ff6a00,#ee0979);color:white;}
+body.light .topBar button{background:linear-gradient(145deg,#00c6ff,#0072ff);color:white;}
+.topBar select{background:rgba(0,0,0,0.3);color:white;}
+body.light .topBar select{background:rgba(255,255,255,0.3);color:#111;}
+
+/* العنوان */
+.header h1{text-align:center;font-size:1.6rem;font-weight:800;margin-bottom:10px;}
+
+/* نوع التحويل */
+.typeIndex{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+}
+.typeIndex button{
+  flex:1 1 45%;
   min-width:90px;
   padding:12px;
   border:none;
   border-radius:15px;
-  font-size:16px;
+  font-size:1rem;
   cursor:pointer;
   background:rgba(255,255,255,0.1);
-  color:#fff;
+  color:white;
   display:flex;
   flex-direction:column;
   align-items:center;
   transition:0.3s;
 }
-.typeIndex button.active{background:#0072ff;color:#fff;}
-body.light .typeIndex button{background:#ddd;color:#111;}
-body.light .typeIndex button.active{background:#ff9800;color:#fff;}
 .typeIndex button span{font-size:24px;margin-bottom:5px;}
+.typeIndex button.active{background:linear-gradient(145deg,#00ff6a,#00c851);color:white;}
+body.light .typeIndex button{background:rgba(255,255,255,0.3);color:#111;}
+body.light .typeIndex button.active{background:linear-gradient(145deg,#ff9800,#ffeb3b);color:white;}
+
+/* المدخلات */
 .controls{display:flex;flex-direction:column;gap:10px;width:100%;margin-bottom:10px;}
-input, select{padding:12px;border:none;border-radius:12px;font-size:16px;width:100%;transition:0.3s;}
-input#valueInput{background:rgba(255,255,255,0.1);color:#fff;font-weight:bold;}
-body.light input#valueInput{background:#eee;color:#111;}
-select#fromSelect, select#toSelect{background:#0072ff;color:#fff;font-weight:bold;}
-body.light select#fromSelect, body.light select#toSelect{background:#ff9800;color:#fff;}
-.arrow{text-align:center;font-size:24px;margin:5px 0;color:#fff;}
+.controls input, .controls select{
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  font-size:1rem;
+  width:100%;
+  transition:0.3s;
+}
+.controls input{background:rgba(0,0,0,0.3);color:white;font-weight:bold;}
+body.light .controls input{background:rgba(255,255,255,0.3);color:#111;font-weight:bold;}
+.controls select{background:rgba(0,0,0,0.3);color:white;font-weight:bold;}
+body.light .controls select{background:rgba(255,255,255,0.3);color:#111;font-weight:bold;}
+.arrow{text-align:center;font-size:24px;margin:5px 0;color:white;}
 body.light .arrow{color:#111;}
-.result{margin-top:15px;padding:15px;text-align:center;border-radius:15px;background:rgba(0,0,0,0.25);font-weight:bold;font-size:1.2rem;transition:0.3s;}
-body.light .result{background:#eee;color:#111;}
+
+/* النتيجة */
+.result{
+  margin-top:15px;
+  padding:15px;
+  text-align:center;
+  border-radius:15px;
+  background:rgba(0,0,0,0.25);
+  font-weight:bold;
+  font-size:1.2rem;
+  transition:0.3s;
+}
+body.light .result{background:rgba(255,255,255,0.3);color:#111;}
+
+/* متجاوب للجوال */
+@media(max-width:600px){
+  .topBar{flex-direction:column;}
+  .typeIndex button{flex:1 1 45%; min-width:80px;}
+  .controls input, .controls select, .topBar button, .topBar select{font-size:0.95rem;padding:10px;}
+}
+@media(max-width:400px){
+  .container{padding:12px;}
+  .typeIndex button{flex:1 1 100%; min-width:auto;}
+}
 </style>
 </head>
 <body>
@@ -102,22 +162,15 @@ body.light .result{background:#eee;color:#111;}
 </div>
 
 <script>
+// اللغات
 const languages={
- ar:{title:"محول ذكي",types:{
-   Length:"الطول",Weight:"الوزن",Time:"الزمن",Area:"المساحة",Volume:"الحجم",
-   Energy:"الطاقة",Data:"البيانات",Temperature:"الحرارة"
- }},
- fr:{title:"Convertisseur intelligent",types:{
-   Length:"Longueur",Weight:"Poids",Time:"Temps",Area:"Surface",Volume:"Volume",
-   Energy:"Énergie",Data:"Données",Temperature:"Température"
- }},
- en:{title:"Smart Converter",types:{
-   Length:"Length",Weight:"Weight",Time:"Time",Area:"Area",Volume:"Volume",
-   Energy:"Energy",Data:"Data",Temperature:"Temperature"
- }}
+ ar:{title:"محول ذكي",types:{Length:"الطول",Weight:"الوزن",Time:"الزمن",Area:"المساحة",Volume:"الحجم",Energy:"الطاقة",Data:"البيانات",Temperature:"الحرارة"}},
+ fr:{title:"Convertisseur intelligent",types:{Length:"Longueur",Weight:"Poids",Time:"Temps",Area:"Surface",Volume:"Volume",Energy:"Énergie",Data:"Données",Temperature:"Température"}},
+ en:{title:"Smart Converter",types:{Length:"Length",Weight:"Weight",Time:"Time",Area:"Area",Volume:"Volume",Energy:"Energy",Data:"Data",Temperature:"Temperature"}}
 };
 let lang="ar";
 
+// الوحدات
 const converters={
  Length:{emoji:"📏",units:{mm:0.001,cm:0.01,m:1,km:1000,inch:0.0254,ft:0.3048,mile:1609}},
  Weight:{emoji:"⚖️",units:{mg:0.000001,g:0.001,kg:1,ton:1000,oz:0.02835,lb:0.4536}},
@@ -129,6 +182,7 @@ const converters={
  Temperature:{emoji:"🌡️",temp:true}
 };
 
+// عناصر DOM
 const typeIndexDiv=document.getElementById("typeIndex");
 const fromSelect=document.getElementById("fromSelect");
 const toSelect=document.getElementById("toSelect");
@@ -138,7 +192,7 @@ const themeBtn=document.getElementById("themeBtn");
 const langSelect=document.getElementById("langSelect");
 let currentType="Length";
 
-// بناء الإندكس مع اللغة
+// بناء نوع التحويل
 function buildTypeIndex(){
   typeIndexDiv.innerHTML="";
   const typeNames=languages[lang].types;
@@ -163,13 +217,13 @@ function updateUnits(){
   toSelect.innerHTML="";
   if(conv.temp){
     ["C","F","K"].forEach(u=>{
-      fromSelect.innerHTML += `<option value="${u}">${u}</option>`;
-      toSelect.innerHTML += `<option value="${u}">${u}</option>`;
+      fromSelect.innerHTML+=`<option value="${u}">${u}</option>`;
+      toSelect.innerHTML+=`<option value="${u}">${u}</option>`;
     });
   }else{
     for(let u in conv.units){
-      fromSelect.innerHTML += `<option value="${u}">${u}</option>`;
-      toSelect.innerHTML += `<option value="${u}">${u}</option>`;
+      fromSelect.innerHTML+=`<option value="${u}">${u}</option>`;
+      toSelect.innerHTML+=`<option value="${u}">${u}</option>`;
     }
   }
   calc();
@@ -198,15 +252,13 @@ function calc(){
 }
 
 // الثيم
-themeBtn.addEventListener("click",()=>{
-  document.body.classList.toggle("light");
-});
+themeBtn.addEventListener("click",()=>{document.body.classList.toggle("light");});
 
 // اللغة
 langSelect.addEventListener("change",()=>{
   lang=langSelect.value;
   document.getElementById("title").textContent=languages[lang].title;
-  buildTypeIndex(); // تحديث أسماء الأزرار حسب اللغة
+  buildTypeIndex();
 });
 
 // أحداث
@@ -220,4 +272,3 @@ updateUnits();
 </script>
 </body>
 </html>
-
